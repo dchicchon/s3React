@@ -32,8 +32,8 @@ var AWS = require("aws-sdk");
 //     }
 // }
 var s3 = new AWS.S3({
-    accessKeyId: "AKIAIWGFPLNZDI62JZSQ",
-    secretAccessKey: "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"
+    // accessKeyId: 
+    // secretAccessKey: 
 })
 
 const upload = multer({
