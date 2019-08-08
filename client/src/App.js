@@ -1,30 +1,46 @@
 import React, { Component } from 'react';
 import './App.css';
 import API from './utils/API'
-// import axios, { post } from 'axios'
+// import Axios from 'axios';
+import axios from 'axios'
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      image: ''
-    }
+  state = {
+    image: ''
   }
 
   onChange(e) {
     let files = e.target.files;
     // console.warn("data file", files)
-    let reader = new FileReader();
-    reader.readAsDataURL(files[0]);
+    // let reader = new FileReader();
+    // reader.readAsDataURL(files[0]);
 
-    reader.onload = (e) => {
-      console.warn("img data", e.target.result)
-    }
-    const formData = {
-      file: e.target.result
-    }
-    console.log(formData)
-    API.uploadPhoto(e.target.result).then(res => console.log(res))
+    // reader.onload = (e) => {
+    //   console.warn("img data", e.target.result)
+    // }
+    const imgObj = {}
+    let imgFormObj = new FormData();
+    imgFormObj.append("imageName", "multer-image-" + Date.now())
+    imgFormObj.append("imageData", e.target.files[0]);
+
+    this.setState({
+      image: URL.createObjectURL(e.target.files[0])
+    })
+    axios.post(`/api/image`, imgFormObj)
+      .then((data) => {
+        if (data.data.success) {
+          alert("IMAGE HAS BEEN SUCCESSFULLY UPLOADED")
+        }
+      })
+
+
+    
+
+    // const formData = {
+    //   file: e.target.result
+    // }
+    // console.log(formData)
+    // API.uploadPhoto(e.target.result).then(res => console.log(res))
     // return post("/api/image", formData)
     //   .then(res => console.warn("result", res))
   }

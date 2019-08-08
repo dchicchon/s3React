@@ -6,6 +6,9 @@ const app = express();
 
 const PORT = 5000;
 
+app.use('/uploads', express.static('uploads'));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json({}));
 
 app.use(routes)
 
